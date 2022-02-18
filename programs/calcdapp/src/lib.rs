@@ -17,12 +17,12 @@ pub mod calcdapp {
         calculator.result = num1+num2;
         Ok(())
     }
-    pub fn multily(ctx:Context<Multiplication>, num1: i64, num2: i64)-> ProgramResult{
+    pub fn multiply(ctx:Context<Multiplication>, num1: i64, num2: i64)-> ProgramResult{
         let calculator = &mut ctx.accounts.calculator;
         calculator.result = num1*num2;
         Ok(())
     }
-    pub fn subract(ctx: Context<Subraction>, num1: i64, num2: i64)->ProgramResult{
+    pub fn subtract(ctx: Context<Subraction>, num1: i64, num2: i64)->ProgramResult{
         let calculator = &mut ctx.accounts.calculator;
         calculator.result = num1-num2;
         Ok(())
@@ -33,6 +33,16 @@ pub mod calcdapp {
         calculator.remainder = num1%num2;
         Ok(())
     }
+}
+
+
+#[derive(Accounts)]
+pub struct Create <'info>{
+    #[account(init, payer = user, space = 8+64+64+64+64)]
+    pub calculator : Account <'info, Caclulator>,
+    #[account(mut)]
+    pub user : Signer<'info>,
+    pub system_program : Program<'info, System>,
 }
 
 #[derive(Accounts)]
